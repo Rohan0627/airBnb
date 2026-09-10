@@ -20,6 +20,20 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: maven
+      - name: Make Maven wrapper executable
+        run: chmod +x mvnw
 
-      - name: Build
+      - name: Build and test
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/airBnb
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+
+          JWT_SECRET_KEY: github-actions-test-secret-key-123456789012345678901234567890
+
+          STRIPE_SECRET_KEY: sk_test_dummy
+          STRIPE_WEBHOOK_SECRET: whsec_test_dummy
+
+          FRONTEND_URL: http://localhost:3000
+
         run: ./mvnw -B test
